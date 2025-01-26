@@ -1,0 +1,66 @@
+/* General styles for the QR Scanner Page */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+h2 {
+    text-align: center;
+    font-size: 30px;
+    color: purple;
+    margin-bottom: 20px;
+}
+
+/* Styling for the error message */
+p {
+    color: red;
+    text-align: center;
+    font-size: 16px;
+    margin-top: 10px;
+}
+
+/* Video container */
+.video-container {
+    width: 100%;
+    max-width: 350px;
+    height: auto;
+    margin: 0 auto;
+    /* Centering the video container */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-top: 20px;
+    margin-bottom: 200px;
+}
+
+/* Video element styling */
+video {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    border: 2px solid #ddd;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    object-fit: cover;
+}
+
+/* Responsive styles for small screens */
+@media (max-width: 600px) {
+    h2 {
+        font-size: 30px;
+    }
+
+    .video-container {
+        max-width: 90%;
+        padding: 15px;
+    }
+}

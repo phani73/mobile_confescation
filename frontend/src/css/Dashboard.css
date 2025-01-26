@@ -1,0 +1,328 @@
+/* General container styles for full screen height */
+.dashboard-container {
+    min-height: 100vh;
+    /* Ensures the container takes full screen height */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    /* Ensures content is spaced properly */
+    padding: 2rem;
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    color: #333;
+    box-sizing: border-box;
+    /* Includes padding in width and height */
+}
+
+/* Title at the top */
+.dashboard-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+    text-align: center;
+    color: purple;
+}
+
+/* Grid for cards */
+.dashboard-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    /* Responsive grid */
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+/* Individual card styles */
+.card {
+    background: #fff;
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+/* Card titles and values */
+.card-title {
+    font-size: 0.9rem;
+    color: #555;
+}
+
+.card-value {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #000;
+}
+
+/* Header styles */
+.dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.dashboard-subtitle {
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+/* Search container */
+.search-container {
+    display: flex;
+    align-items: center;
+    background-color: #ffffff;
+    border-radius: 30px;
+    padding: 8px 15px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    gap: 10px;
+    /* Space between icon and input */
+}
+
+/* React search icon */
+.search-icon {
+    font-size: 1.5rem;
+    /* Size of the icon */
+    color: #757575;
+    /* Neutral gray color */
+}
+
+/* Search input styles */
+.search-input {
+    flex: 1;
+    border: none;
+    outline: none;
+    font-size: 1rem;
+    color: #333;
+    background-color: transparent;
+}
+
+.search-input::placeholder {
+    color: #b0b0b0;
+    font-size: 0.9rem;
+}
+
+/* Responsive table */
+.dashboard-table-container {
+    overflow-x: auto;
+    margin-top: 1rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.dashboard-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #fff;
+    border-radius: 8px;
+}
+
+.dashboard-table th,
+.dashboard-table td {
+    padding: 0.75rem;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.dashboard-table th {
+    background: #f1f1f1;
+    font-weight: bold;
+}
+
+.status {
+    font-weight: bold;
+    text-transform: capitalize;
+}
+
+.status.pending {
+    color: #e74c3c;
+}
+
+.status.returned {
+    color: #27ae60;
+}
+
+/* Button styling */
+.button-container {
+    text-align: center;
+    margin-top: 1rem;
+}
+
+.dialog-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.dialog-box {
+    background: #fff;
+    border-radius: 8px;
+    padding: 20px;
+    width: 90%;
+    max-width: 400px;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.dialog-actions {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-around;
+}
+
+.confirm-button {
+    background: #28a745;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.cancel-button {
+    background: #dc3545;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.confirm-button:hover,
+.cancel-button:hover {
+    opacity: 0.9;
+}
+
+.scan-button {
+    background-color: purple;
+    color: #fff;
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+/* Styling for status card container */
+.status-card-container {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+/* Individual status card */
+.status-card {
+    background-color: #fff;
+    border: 2px solid purple;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    width: 150px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.status-card h3 {
+    font-size: 1.5rem;
+    color: purple;
+    margin-bottom: 10px;
+}
+
+.status-card p {
+    font-size: 2rem;
+    color: purple;
+    font-weight: bold;
+}
+
+/* Return button styling */
+button {
+    background-color: #4CAF50;
+    /* Green background for Return button */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+button:hover {
+    background-color: #45a049;
+    /* Slightly darker green on hover */
+    transform: scale(1.05);
+    /* Slight scale effect on hover */
+}
+
+button:active {
+    background-color: #3e8e41;
+    /* Even darker green when clicked */
+    transform: scale(1);
+    /* Remove the scale effect when clicked */
+}
+
+/* Style for the button in table rows */
+.dashboard-table td button {
+    padding: 8px 16px;
+    font-size: 14px;
+    background-color: purple;
+    /* Blue color for default */
+    border-radius: 5px;
+    border: none;
+    color: white;
+}
+
+.dashboard-table td button:hover {
+    background-color: #1976D2;
+    /* Darker blue on hover */
+}
+
+.dashboard-table td button:active {
+    background-color: #1565C0;
+    /* Darker blue on click */
+}
+
+.scan-button:hover {
+    background-color: #0056b3;
+}
+
+.logout-button {
+    background-color: purple;
+    /* Red */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 20px;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+.logout-button:hover {
+    background-color: purple;
+    /* Darker red on hover */
+}
+
+/* Mobile-specific tweaks */
+@media (max-width: 768px) {
+    .dashboard-header {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.5rem;
+    }
+
+    .dashboard-cards {
+        grid-template-columns: 1fr;
+    }
+
+    .dashboard-table th,
+    .dashboard-table td {
+        padding: 0.5rem;
+    }
+}

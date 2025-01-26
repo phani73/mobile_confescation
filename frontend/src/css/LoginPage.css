@@ -1,0 +1,167 @@
+/* General Reset and Font Styling */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto', sans-serif;
+    background-color: #f4f6f9;
+    /* Light background for the entire page */
+}
+
+/* Login Container */
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+    background-color: #f4f6f9;
+}
+
+/* Form Styles */
+.form {
+    background: #ffffff;
+    padding: 40px 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+}
+
+.form-title {
+    font-size: 24px;
+    font-weight: 600;
+    color: #333333;
+    margin-bottom: 20px;
+}
+
+/* Input Fields */
+.input-container {
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.input-container input {
+    width: 100%;
+    padding: 14px 40px; /* Add padding-right for the icon */
+    font-size: 16px;
+    border: 1px solid #cccccc;
+    border-radius: 8px;
+    outline: none;
+    transition: border-color 0.3s ease;
+    background-color: #f9f9f9;
+}
+
+.input-container input:focus {
+    border-color: #6200ee;
+    box-shadow: 0 0 5px rgba(98, 0, 238, 0.3);
+}
+
+/* Password Visibility Icon */
+/* Password Visibility Icon Container */
+.password-eye-container {
+    position: absolute;
+    top: 50%;
+    right: 15px;
+    /* Adjust position on the left */
+    transform: translateY(-50%);
+    /* Vertically center the icon */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 30px;
+    /* Set a fixed width to make sure only the icon fits */
+    height: 30px;
+    /* Set height matching icon size */
+    cursor: pointer;
+}
+
+.password-eye-container .password-icon {
+    font-size: 20px;
+    color: #666666;
+    transition: color 0.3s ease;
+}
+
+.password-eye-container:hover .password-icon {
+    color: purple;
+}
+
+/* Update for input field to ensure it doesn’t overlap with the icon */
+.password-container {
+    position: relative;
+}
+
+.password-input {
+    width: 100%;
+    padding: 14px 40px 14px 40px;
+    /* Extra padding for the icon space on the left */
+    font-size: 16px;
+    border: 1px solid #cccccc;
+    border-radius: 8px;
+    outline: none;
+    transition: border-color 0.3s ease;
+    background-color: #f9f9f9;
+}
+
+.password-input:focus {
+    border-color: #6200ee;
+    box-shadow: 0 0 5px rgba(98, 0, 238, 0.3);
+}
+
+/* Submit Button */
+.submit {
+    width: 100%;
+    padding: 14px 20px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #ffffff;
+    background-color: purple;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: background-color 0.3s ease, transform 0.2s;
+}
+
+.submit:hover {
+    background-color: purple;
+    transform: scale(1.02);
+}
+
+.submit:active {
+    transform: scale(0.98);
+}
+
+/* Error Message */
+.error {
+    color: #ff0033;
+    font-size: 14px;
+    margin-top: -10px;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 767px) {
+    .form {
+        padding: 30px 20px;
+    }
+
+    .form-title {
+        font-size: 20px;
+    }
+
+    .input-container input {
+        font-size: 14px;
+        padding: 12px 15px;
+    }
+
+    .submit {
+        font-size: 14px;
+        padding: 12px 15px;
+    }
+
+    .password-icon {
+        font-size: 18px;
+    }
+}
