@@ -7,7 +7,8 @@ const scanSchema = new mongoose.Schema({
   date: String,
   name: String,
   phoneCompany: String,
-  user: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: false }, // Reference to User
+  user: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: false },
+  status: { type: String, enum: ["Pending", "Returned"], default: "Pending" }, // Reference to User
 });
 
 const Scan = mongoose.model("Scan", scanSchema);

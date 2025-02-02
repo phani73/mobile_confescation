@@ -42,6 +42,7 @@ body {
 }
 
 .input-container input {
+    color: #333333;
     width: 100%;
     padding: 14px 40px; /* Add padding-right for the icon */
     font-size: 16px;
@@ -92,6 +93,7 @@ body {
 }
 
 .password-input {
+    color: #333333;
     width: 100%;
     padding: 14px 40px 14px 40px;
     /* Extra padding for the icon space on the left */

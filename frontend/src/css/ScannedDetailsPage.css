@@ -4,7 +4,7 @@
     padding: 0;
     box-sizing: border-box;
     width: 100%;
-    /* Added width: 100% to * selector */
+    /* Ensure elements take full width */
 }
 
 /* General Body Styling */
@@ -16,34 +16,37 @@ body {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    /* Ensure full height for centering */
     margin: 0;
+    /* Prevent content from being cut off on some mobile browsers */
+    overflow-x: hidden;
 }
 
-/* Main Container (Increased Size and Centered) */
+/* Main Container */
 .form-container {
     padding: 40px;
-    width: 90%;
-    max-width: 1800px;
-    height: auto;
-    margin: 0;
-    /* Remove margin completely */
+    width: 100%;
+    /* Use percentage for responsiveness */
+    max-width: 900px;
+    /* Set a max-width */
     background-color: #fff;
     border-radius: 15px;
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.2);
     display: flex;
     flex-direction: column;
     align-items: center;
     color: purple;
+    gap: 30px;
 }
 
 /* Form Header */
 .form-header {
+    padding-top: 17px;
     text-align: center;
     color: purple;
-    font-size: 2.8rem;
+    font-size: 2.5rem;
+    /* Slightly smaller header */
     font-weight: bold;
-    margin-bottom: 0px;
+    margin-bottom: 10px;
 }
 
 /* Scan Form */
@@ -54,35 +57,72 @@ body {
     width: 100%;
 }
 
-/* Form Group (each input field) */
+/* Back Button Container */
+.back-button-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    /* Smaller back button */
+    height: 40px;
+    border-radius: 50%;
+    background-color: rgba(128, 0, 128, 0.1);
+    cursor: pointer;
+    transition: background 0.3s ease-in-out;
+    position: absolute;
+    /* Position it relative to the form container */
+    top: 20px;
+    /* Adjust top position */
+    left: 20px;
+    /* Adjust left position */
+    z-index: 1;
+    /* Ensure it's above other content */
+}
+
+
+/* Back Icon */
+.back-icon {
+    font-size: 1.5rem;
+    /* Smaller icon */
+    color: purple;
+}
+
+.back-button-container:hover {
+    background-color: rgba(128, 0, 128, 0.2);
+}
+
+/* Form Group */
 .form-group {
     display: flex;
     flex-direction: column;
     gap: 12px;
-    width: 100%; 
+    width: 100%;
 }
 
 /* Label Styling */
 label {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
+    /* Slightly smaller labels */
     font-weight: 600;
     color: purple;
-    width: 100%;
 }
 
-/* Input Field Styling */
+/* Input and Textarea Styling */
 .form-input {
-    padding: 14px;
-    font-size: 1.2rem;
+    padding: 12px;
+    /* Slightly less padding */
+    font-size: 1rem;
     border: 1px solid #ddd;
     border-radius: 8px;
     color: #333;
     background-color: #f9f9f9;
     transition: all 0.3s ease;
-    width: 100%; 
+    width: 100%;
+    resize: vertical;
+    min-height: 80px;
+    /* Adjust min-height as needed */
 }
 
-/* Hover effect on inputs */
 .form-input:hover,
 .form-input:focus {
     border-color: #C7B8EA;
@@ -92,68 +132,39 @@ label {
 
 /* "No details" Message */
 .no-details {
-    font-size: 1.2rem;
+    font-size: 1rem;
     color: purple;
     text-align: center;
     margin-top: 20px;
     width: 100%;
 }
+
+/* Button Styling */
 button {
     background-color: purple;
-    /* Green */
     border: none;
     color: white;
-    padding: 15px 32px;
+    padding: 12px 24px;
+    /* Smaller button padding */
     text-align: center;
     text-decoration: none;
     display: inline-block;
-    font-size: 16px;
+    font-size: 1rem;
     margin: 10px 2px;
     cursor: pointer;
     border-radius: 5px;
 }
-.back-button-container{
-    display: flex;
 
-}
-.back-icon{
-            padding-right: 330px;
-            font-size: 2rem;
-            /* Increased the font size */
-            color: purple;
-            cursor: pointer;
-        
-}
-/* Responsive Adjustments for Mobile Screens */
+/* Responsive Adjustments */
 @media (max-width: 768px) {
+
+    /* Tablet and smaller */
     .form-container {
-        padding: 25px;
-        width: 100%;
-        max-width: 100%;
+        padding: 30px;
     }
 
     .form-header {
         font-size: 2rem;
-    }
-
-    label {
-        font-size: 1.1rem;
-    }
-
-    .form-input {
-        font-size: 1rem;
-        padding: 12px;
-    }
-}
-
-@media (max-width: 480px) {
-    .form-container {
-        padding: 15px;
-        width: 100%;
-    }
-
-    .form-header {
-        font-size: 1.6rem;
     }
 
     label {
@@ -163,19 +174,48 @@ button {
     .form-input {
         font-size: 0.9rem;
         padding: 10px;
+        min-height: 60px;
+    }
+
+    button {
+        font-size: 0.9rem;
+        padding: 10px 20px;
+    }
+
+    .back-button-container {
+        top: 15px;
+        left: 15px;
     }
 }
 
-/* Additional Card Styling for Name and Company */
-.extra-card {
-    width: 100%;
-    max-width: 1200px;
-    background-color: #f9f9f9;
-    padding: 20px;
-    margin-top: 30px;
-    border-radius: 10px;
-    box-shadow: 0 2px 15px rgba(48, 0, 48, 0.1);
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
+@media (max-width: 480px) {
+
+    /* Phone */
+    .form-container {
+        padding: 20px;
+    }
+
+    .form-header {
+        font-size: 1.6rem;
+    }
+
+    label {
+        font-size: 0.9rem;
+    }
+
+    .form-input {
+        font-size: 0.8rem;
+        padding: 8px;
+        min-height: 50px;
+    }
+
+    button {
+        font-size: 0.8rem;
+        padding: 8px 16px;
+    }
+
+    .back-button-container {
+        top: 10px;
+        left: 10px;
+    }
 }

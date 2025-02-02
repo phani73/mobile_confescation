@@ -1,0 +1,270 @@
+/* Global styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f9f9f9;
+    color: #333;
+    line-height: 1.5;
+}
+
+a {
+    text-decoration: none;
+}
+
+/* Container for the dashboard */
+.dashboard-container {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.dashboard-title {
+    text-align: center;
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 1.5rem;
+}
+
+/* Error container */
+.error-container {
+    text-align: center;
+    padding: 2rem;
+    background-color: #f8d7da;
+    color: #721c24;
+    border-radius: 8px;
+    margin-bottom: 2rem;
+}
+
+.logout-button,
+.back-button {
+    /* Style both buttons the same */
+    padding: 10px 16px;
+    /* Adjusted padding */
+    font-size: 14px;
+    /* Adjusted font size */
+    font-weight: 600;
+    color: #ffffff;
+    background-color: purple;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: background-color 0.3s ease, transform 0.2s;
+    min-width: 120px;
+    /* Set a minimum width */
+    width: auto;
+    /* Important: Remove width: 100% */
+    display: block;
+    /* Make the button a block element */
+    margin: 0 auto;
+    /* Center the button horizontally */
+}
+
+.logout-button:hover,
+.back-button:hover {
+    background-color: purple;
+    transform: scale(1.02);
+}
+
+.logout-button:active,
+.back-button:active {
+    transform: scale(0.98);
+}
+
+/* Table styling */
+.dashboard-table-container {
+    overflow-x: auto;
+    margin-bottom: 1.5rem;
+}
+
+.dashboard-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+}
+
+.dashboard-table th,
+.dashboard-table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.dashboard-table th {
+    background-color: #f4f4f4;
+    font-weight: bold;
+}
+
+.dashboard-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.dashboard-table tr:hover {
+    background-color: #f1f1f1;
+}
+
+/* Search Bar Styling */
+.search-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.search-bar {
+    width: 50%;
+    max-width: 400px;
+    padding: 10px;
+    font-size: 16px;
+    border: 2px solid #ddd;
+    border-radius: 5px;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.search-bar:focus {
+    border-color: purple;
+    box-shadow: 0px 0px 5px rgba(0, 123, 255, 0.5);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .search-bar {
+        width: 80%;
+        font-size: 14px;
+        padding: 8px;
+    }
+}
+/* Responsive styles for mobile devices */
+@media (max-width: 768px) {
+    .dashboard-container {
+        padding: 15px;
+    }
+
+    .dashboard-title {
+        font-size: 1.5rem;
+    }
+
+    .dashboard-table th,
+    .dashboard-table td {
+        padding: 10px;
+        font-size: 0.9rem;
+    }
+
+    .dashboard-table {
+        font-size: 0.9rem;
+    }
+
+    .logout-button,
+    .back-button {
+        font-size: 12px;
+        padding: 8px 14px;
+        min-width: 100px;
+    }
+}
+
+/* Responsive styles for smaller screens like iPhones */
+@media (max-width: 480px) {
+    .dashboard-container {
+        padding: 10px;
+    }
+
+    .dashboard-title {
+        font-size: 1.3rem;
+    }
+
+    .dashboard-table th,
+    .dashboard-table td {
+        padding: 8px;
+        font-size: 0.85rem;
+    }
+
+    .logout-button,
+    .back-button {
+        font-size: 12px;
+        padding: 6px 12px;
+        min-width: 80px;
+        /* Even smaller minimum width */
+    }
+
+    /* Table adjustments for smaller screens */
+    .dashboard-table {
+        font-size: 0.85rem;
+    }
+}
+
+.button-container {
+    /* Style for the button container */
+    text-align: center;
+    /* Center the button horizontally */
+    margin-top: 1rem;
+    /* Add some top margin */
+}
+
+/* Style for both buttons */
+.logout-button,
+.back-button {
+    padding: 12px 18px;
+    /* Slightly increased padding for better touch experience */
+    font-size: 15px;
+    font-weight: 600;
+    color: #ffffff;
+    background-color: purple;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: background-color 0.3s ease, transform 0.2s;
+    min-width: 140px;
+    /* Slightly increased minimum width */
+    display: inline-block;
+    /* Ensures the button doesn’t stretch full width */
+    margin: 10px auto;
+    /* Centers the button */
+    position: relative;
+    z-index: 10;
+    /* Prevents it from being overlapped */
+    pointer-events: auto;
+    /* Ensures clicks always work */
+}
+
+/* Hover and active states */
+.back-button-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    /* Smaller back button */
+    height: 40px;
+    border-radius: 50%;
+    background-color: rgba(128, 0, 128, 0.1);
+    cursor: pointer;
+    transition: background 0.3s ease-in-out;
+    position: absolute;
+    /* Position it relative to the form container */
+    top: 20px;
+    /* Adjust top position */
+    left: 20px;
+    /* Adjust left position */
+    z-index: 1;
+    /* Ensure it's above other content */
+}
+
+
+/* Back Icon */
+.back-icon {
+    font-size: 1.5rem;
+    /* Smaller icon */
+    color: purple;
+}
+
+.back-button-container:hover {
+    background-color: rgba(128, 0, 128, 0.2);
+}

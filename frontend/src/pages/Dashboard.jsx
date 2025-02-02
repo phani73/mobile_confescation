@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { AiOutlineSearch, AiOutlineLogout } from "react-icons/ai";
+import { AiOutlineLogout, AiOutlineKey, AiOutlineHistory } from "react-icons/ai";
+import Loader from "./Loader"; // Importing the Loader component
 import "../css/Dashboard.css";
 
 const Dashboard = () => {
@@ -10,94 +11,124 @@ const Dashboard = () => {
   const [selectedReceipt, setSelectedReceipt] = useState(null);
   const [loading, setLoading] = useState(true); // For handling loading state
   const [error, setError] = useState(""); // For handling errors
+  const [scanCounts, setScanCounts] = useState({ returnedCount: 0 }); // Store only returned count
 
   const navigate = useNavigate();
-useEffect(() => {
-  const fetchConfiscations = async () => {
-    setLoading(true);
-    try {
-      const token = localStorage.getItem("token");
 
-      // Debug: Check if the token exists
-      console.log("Token from localStorage:", token);
+  useEffect(() => {
+    const fetchConfiscations = async () => {
+      setLoading(true);
+      try {
+        const token = localStorage.getItem("token");
 
-      // Check if token is present
-      if (!token) {
-        throw new Error("No token found. Please log in.");
-      }
-
-      const response = await fetch("http://localhost:5000/api/get-scans", {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-
-      // Debug: Check if the response is okay
-      console.log("Response status:", response.status);
-
-      if (!response.ok) {
-        if (response.status === 401) {
-          throw new Error("Unauthorized. Please login again.");
+        // Check if token is present
+        if (!token) {
+          throw new Error("No token found. Please log in.");
         }
-        throw new Error("Failed to fetch confiscations.");
+
+        const response = await fetch("http://localhost:5000/api/get-scans", {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+
+        if (!response.ok) {
+          if (response.status === 401) {
+            throw new Error("Unauthorized. Please login again.");
+          }
+          throw new Error("Failed to fetch confiscations.");
+        }
+
+        const data = await response.json();
+        const formattedData = data
+          .filter(item => item.status === "Pending") // Only include Pending items
+          .map((item) => ({
+            receiptNo: item.receiptNumber,
+            rollNo: item.rollNo,
+            name: item.name,
+            company: item.phoneCompany,
+            date: item.date,
+            status: item.status || "Pending", // Use status from the backend or default to Pending
+          }));
+        setConfiscations(formattedData);
+      } catch (err) {
+        setError(err.message);
+        if (err.message.includes("Unauthorized")) {
+          handleLogout(); // Auto-logout on token expiration
+        }
+      } finally {
+        setLoading(false);
       }
+    };
 
-      const data = await response.json();
-      const formattedData = data.map((item) => ({
-        receiptNo: item.receiptNumber,
-        rollNo: item.rollNo,
-        name: item.name,
-        company: item.phoneCompany,
-        date: item.date,
-        status: "Pending", // Default status; backend should include status field for production
-      }));
-      setConfiscations(formattedData);
-    } catch (err) {
-      console.error("Error fetching confiscations:", err.message);
-      setError(err.message);
-      if (err.message.includes("Unauthorized")) {
-        handleLogout(); // Auto-logout on token expiration
+    const fetchScanCounts = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        const response = await fetch("http://localhost:5000/api/scan-counts", {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch scan counts.");
+        }
+
+        const data = await response.json();
+        setScanCounts(data); // Update only returned count
+      } catch (err) {
+        setError("Error fetching scan counts.");
       }
-    } finally {
-      setLoading(false);
-    }
-  };
+    };
 
-  fetchConfiscations();
-}, [navigate]);
-
+    fetchConfiscations();
+    fetchScanCounts(); // Fetch the scan counts (only returned count)
+  }, [navigate]);
 
   const handleReturn = (receiptNo) => {
     setSelectedReceipt(receiptNo);
     setShowDialog(true);
   };
 
-  const confirmReturn = async () => {
-    try {
-      const token = localStorage.getItem("token");
+const confirmReturn = async () => {
+  try {
+    const token = localStorage.getItem("token");
 
-      const response = await fetch(
-        `http://localhost:5000/api/delete-scan/${selectedReceipt}`,
-        {
-          method: "DELETE",
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
+    // Close the dialog immediately for better user experience
+    setShowDialog(false);
 
-      if (!response.ok) {
-        throw new Error("Failed to mark the item as returned.");
+    // Optimistically update the confiscations state
+    const updatedConfiscations = confiscations.map((item) =>
+      item.receiptNo === selectedReceipt
+        ? { ...item, status: "Returned" }
+        : item
+    );
+    setConfiscations(updatedConfiscations);
+
+    // Call the backend to mark as returned
+    const response = await fetch(
+      `http://localhost:5000/api/return-scan/${selectedReceipt}`,
+      {
+        method: "PUT",
+        headers: { Authorization: `Bearer ${token}` },
       }
+    );
 
-      // Update the UI
-      setConfiscations((prevState) =>
-        prevState.filter((item) => item.receiptNo !== selectedReceipt)
-      );
-
-      setShowDialog(false);
-      setSelectedReceipt(null);
-    } catch (err) {
-      console.error(err.message);
-      setError("Error processing the return. Please try again.");
+    if (!response.ok) {
+      // If the backend call fails, revert the state and show an error
+      setConfiscations(confiscations); // Revert to the original state
+      throw new Error("Failed to mark the item as returned.");
     }
-  };
+
+    // Fetch the updated scan counts
+    fetchScanCounts();
+  } catch (err) {
+    // Handle the error gracefully
+    setError(err.message || "An unexpected error occurred. Please try again.");
+  } finally {
+    // Clear the selected receipt after operation
+    setSelectedReceipt(null);
+  }
+};
+
+
+
 
   const cancelReturn = () => {
     setShowDialog(false);
@@ -108,20 +139,23 @@ useEffect(() => {
     item.receiptNo.includes(searchTerm) || item.rollNo.includes(searchTerm)
   );
 
-  const pendingCount = confiscations.filter((item) => item.status === "Pending")
-    .length;
-  const returnedCount = confiscations.filter((item) => item.status === "Returned")
-    .length;
-
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
     navigate("/login");
   };
 
+  const handleChangePassword = () => {
+    navigate("/change-password");
+  };
+
+  const handleViewHistory = () => {
+    navigate("/history"); // Assuming you have a history route
+  };
+
   // Show loading state while data is being fetched
   if (loading) {
-    return <div className="loading-container">Loading data...</div>;
+    return <Loader />; // Using Loader component here
   }
 
   // Show error state if there's an error
@@ -141,24 +175,32 @@ useEffect(() => {
       <h1 className="dashboard-title">Mobile Confiscation Dashboard</h1>
 
       <div className="logout-button-container">
-        <button onClick={handleLogout} className="logout-button">
-          <AiOutlineLogout size={24} /> Logout
-        </button>
+        <div className="button-group">
+          <button onClick={handleLogout} className="logout-button">
+            <AiOutlineLogout size={24} /> Logout
+          </button>
+          <button onClick={handleChangePassword} className="logout-button">
+            <AiOutlineKey size={24} /> Change Password
+          </button>
+          <button onClick={handleViewHistory} className="logout-button">
+            <AiOutlineHistory size={24} /> History
+          </button>
+        </div>
       </div>
 
       <div className="status-card-container">
         <div className="status-card">
           <h3>Pending</h3>
-          <p>{pendingCount}</p>
+          <p>{confiscations.length}</p> {/* Display count of pending confiscations */}
         </div>
         <div className="status-card">
           <h3>Returned</h3>
-          <p>{returnedCount}</p>
+          <p>{scanCounts.returnedCount}</p> {/* Display count of returned confiscations */}
         </div>
       </div>
 
       <div className="dashboard-header">
-        <h2 className="dashboard-subtitle">Recent Confiscations</h2>
+        <h2 className="dashboard-subtitle">Pending Confiscations</h2>
         <div className="search-container">
           <form onSubmit={(e) => e.preventDefault()}>
             <input
@@ -168,9 +210,6 @@ useEffect(() => {
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />
-            <button className="search-button">
-              <AiOutlineSearch size={20} />
-            </button>
           </form>
         </div>
       </div>
@@ -200,14 +239,12 @@ useEffect(() => {
                   {item.status}
                 </td>
                 <td>
-                  {item.status === "Pending" && (
-                    <button
-                      onClick={() => handleReturn(item.receiptNo)}
-                      className="return-button"
-                    >
-                      Return
-                    </button>
-                  )}
+                  <button
+                    onClick={() => handleReturn(item.receiptNo)}
+                    className="return-button"
+                  >
+                    Return
+                  </button>
                 </td>
               </tr>
             ))}

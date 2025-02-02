@@ -2,6 +2,7 @@ const express = require("express");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken"); // Import jsonwebtoken for token generation
 const User = require("../models/user"); 
+const authMiddleware = require("../middleware/authMiddleware");
 // Adjust the path if needed
 const router = express.Router();
 
@@ -43,6 +44,32 @@ router.post("/login", async (req, res) => {
   }
 });
 
+router.post("/reset-password", authMiddleware, async (req, res) => {
+  try {
+    const { newPassword } = req.body;
+
+    if (!newPassword) {
+      return res.status(400).json({ message: "New password is required" });
+    }
+
+
+    // Get user ID from middleware
+    const userId = req.user.id;
+
+    // Hash the new password
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+    // Update password in the database
+    await User.findByIdAndUpdate(userId, { password: hashedPassword });
+
+    res
+      .status(200)
+      .json({ success: true, message: "Password updated successfully" });
+  } catch (err) {
+    console.error("Error resetting password:", err);
+    res.status(500).json({ message: "Server error. Please try again." });
+  }
+});
 
 
 

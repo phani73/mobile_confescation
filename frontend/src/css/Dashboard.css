@@ -1,17 +1,16 @@
 /* General container styles for full screen height */
 .dashboard-container {
     min-height: 100vh;
-    /* Ensures the container takes full screen height */
+    height: 100vh;
+    overflow: hidden;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    /* Ensures content is spaced properly */
     padding: 2rem;
     font-family: Arial, sans-serif;
     background-color: #f9f9f9;
     color: #333;
     box-sizing: border-box;
-    /* Includes padding in width and height */
 }
 
 /* Title at the top */
@@ -27,7 +26,6 @@
 .dashboard-cards {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    /* Responsive grid */
     gap: 1rem;
     margin-bottom: 1rem;
 }
@@ -75,15 +73,12 @@
     padding: 8px 15px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     gap: 10px;
-    /* Space between icon and input */
 }
 
 /* React search icon */
 .search-icon {
     font-size: 1.5rem;
-    /* Size of the icon */
     color: #757575;
-    /* Neutral gray color */
 }
 
 /* Search input styles */
@@ -101,18 +96,24 @@
     font-size: 0.9rem;
 }
 
-/* Responsive table */
+/* Table container styles */
 .dashboard-table-container {
+    flex-grow: 1;
     overflow-x: auto;
     margin-top: 1rem;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    max-height: 100vh;
+    height: 100vh;
 }
 
+/* Table styles */
 .dashboard-table {
     width: 100%;
     border-collapse: collapse;
     background: #fff;
     border-radius: 8px;
+    min-width: 800px;
+    table-layout: auto;
 }
 
 .dashboard-table th,
@@ -120,13 +121,17 @@
     padding: 0.75rem;
     text-align: left;
     border-bottom: 1px solid #ddd;
+    white-space: nowrap;
 }
 
-.dashboard-table th {
+.dashboard-table thead {
+    position: sticky;
+    top: 0;
     background: #f1f1f1;
-    font-weight: bold;
+    z-index: 2;
 }
 
+/* Status styles */
 .status {
     font-weight: bold;
     text-transform: capitalize;
@@ -175,22 +180,15 @@
     justify-content: space-around;
 }
 
-.confirm-button {
-    background: #28a745;
-    color: #fff;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
+.confirm-button,
 .cancel-button {
-    background: #dc3545;
+    background: purple;
     color: #fff;
-    padding: 10px 20px;
+    padding: 5px 10px;
     border: none;
     border-radius: 4px;
     cursor: pointer;
+    font-size: 14px;
 }
 
 .confirm-button:hover,
@@ -198,17 +196,43 @@
     opacity: 0.9;
 }
 
-.scan-button {
-    background-color: purple;
-    color: #fff;
-    padding: 0.75rem 1.5rem;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 1rem;
+/* Buttons side by side with smaller size */
+.logout-button-container {
+    display: flex;
+    /* or inline-flex */
+    justify-content: center;
+    /* Center the buttons */
+    width: 100%;
+    /* Take full width available */
+    margin-bottom: 1rem;
+    /* Add some space below buttons */
 }
 
-/* Styling for status card container */
+.button-group {
+    /* Style the button group */
+    display: flex;
+    gap: 10px;
+    /* Space between buttons */
+    flex-wrap: wrap;
+    /* Allows buttons to wrap on smaller screens */
+    justify-content: center;
+    /* Center buttons horizontally */
+}
+
+.logout-button {
+    /* Styles for each button */
+    /* ... (your existing button styles) */
+    flex: 1;
+    /* Optional: Distribute space evenly among buttons */
+    min-width: 150px;
+    /* Optional: Set a minimum width */
+    /* Add any other styles you want to apply to each button */
+}
+.logout-button:active {
+    background-color: #3a006d;
+}
+
+/* Status card container */
 .status-card-container {
     display: flex;
     gap: 20px;
@@ -241,76 +265,69 @@
 
 /* Return button styling */
 button {
-    background-color: #4CAF50;
-    /* Green background for Return button */
+    background-color: purple;
     color: white;
     border: none;
-    padding: 10px 20px;
-    font-size: 16px;
+    padding: 5px 10px;
+    font-size: 14px;
     cursor: pointer;
-    border-radius: 5px;
+    border-radius: 4px;
     transition: background-color 0.3s, transform 0.3s;
 }
 
 button:hover {
-    background-color: #45a049;
-    /* Slightly darker green on hover */
+    background-color: #5a189a;
     transform: scale(1.05);
-    /* Slight scale effect on hover */
 }
 
 button:active {
-    background-color: #3e8e41;
-    /* Even darker green when clicked */
+    background-color: #4e148c;
     transform: scale(1);
-    /* Remove the scale effect when clicked */
 }
 
 /* Style for the button in table rows */
 .dashboard-table td button {
-    padding: 8px 16px;
-    font-size: 14px;
+    padding: 5px 10px;
+    font-size: 12px;
     background-color: purple;
-    /* Blue color for default */
-    border-radius: 5px;
+    border-radius: 4px;
     border: none;
     color: white;
 }
 
 .dashboard-table td button:hover {
-    background-color: #1976D2;
-    /* Darker blue on hover */
+    background-color: #6a1b9a;
 }
 
 .dashboard-table td button:active {
-    background-color: #1565C0;
-    /* Darker blue on click */
+    background-color: #4a148c;
+}
+
+.scan-button {
+    background-color: purple;
+    color: #fff;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
 }
 
 .scan-button:hover {
-    background-color: #0056b3;
-}
-
-.logout-button {
-    background-color: purple;
-    /* Red */
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-top: 20px;
-    font-size: 16px;
-    transition: background-color 0.3s ease;
-}
-
-.logout-button:hover {
-    background-color: purple;
-    /* Darker red on hover */
+    background-color: #5e17a8;
 }
 
 /* Mobile-specific tweaks */
 @media (max-width: 768px) {
+
+    .logout-button {
+            min-width: 120px;
+            /* Adjust min-width for smaller screens */
+            font-size: 12px;
+            /* Adjust font-size if needed */
+            padding: 5px 8px;
+            /* Adjust padding if needed */
+        }
     .dashboard-header {
         flex-direction: column;
         align-items: stretch;
@@ -324,5 +341,15 @@ button:active {
     .dashboard-table th,
     .dashboard-table td {
         padding: 0.5rem;
+    }
+
+    .dashboard-table-container {
+        overflow-x: auto;
+        max-height: 50vh;
+    }
+
+    .dashboard-table {
+        font-size: 0.9rem;
+        min-width: 100%;
     }
 }
