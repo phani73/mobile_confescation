@@ -43,7 +43,6 @@ Database: MongoDB
 
 Authentication: JWT (JSON Web Tokens)
 
-State Management: Redux (if applicable)
 
 Project Status
 
